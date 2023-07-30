@@ -22,7 +22,7 @@ env:
 
 jobs:
   download_secure_file:
-    runs-on: [self-hosted, github-selfhosted-runner-autoscaler-rtl]
+    runs-on: ubuntu-latest
     # outputs:
     #   HW_CSS_FDS_AZURE_CLIENT_ID: ${{ steps.HW_CSS_FDS_AZURE_CLIENT_ID.outputs.HW_CSSM_FOODS_AZURE_CLIENT_ID }}
     #   HW_CSS_FDS_AZURE_TENANT_ID: ${{ steps.HW_CSS_FDS_AZURE_TENANT_ID.outputs.HW_CSSM_FOODS_AZURE_TENANT_ID }}
