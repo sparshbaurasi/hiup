@@ -1,20 +1,16 @@
+name: DownloadSecureFile
+
 on:
   workflow_call:
-    # outputs:
-    #   secure_file:
-    #     value: ${{ jobs.download_secure_file.outputs.file }}
-    #   HW_CSS_FDS_AZURE_CLIENT_ID:
-    #     value: ${{ jobs.download_secure_file.outputs.HW_CSS_FDS_AZURE_CLIENT_ID }}
-    #   HW_CSS_FDS_AZURE_TENANT_ID:
-    #     value: ${{ jobs.download_secure_file.outputs.HW_CSS_FDS_AZURE_TENANT_ID }}
-    #   HW_CSS_FDS_AZURE_SUBSCRIPTION_ID:
-    #     value: ${{ jobs.download_secure_file.outputs.HW_CSS_FDS_AZURE_SUBSCRIPTION_ID }}
+    outputs:
+      secure_file:
+        value: ${{ jobs.download_secure_file.outputs.file }}
     secrets:
-      HW_CSS_FDS_AZURE_CLIENT_ID:
+      CSSM_HW_FOODS_AZURE_CLIENT_ID:
         required: true
-      HW_CSS_FDS_AZURE_TENANT_ID:
+      CSSM_HW_FOODS_AZURE_TENANT_ID:
         required: true
-      HW_CSS_FDS_AZURE_SUBSCRIPTION_ID:
+      CSSM_HW_FOODS_AZURE_SUBSCRIPTION_ID:
         required: true
 env:
   AZURE_KEYVAULT_NAME: 'kv-rtl-sma-prod'
@@ -22,18 +18,29 @@ env:
 
 jobs:
   download_secure_file:
-    runs-on: ubuntu-latest
-    # outputs:
-    #   HW_CSS_FDS_AZURE_CLIENT_ID: ${{ steps.HW_CSS_FDS_AZURE_CLIENT_ID.outputs.HW_CSSM_FOODS_AZURE_CLIENT_ID }}
-    #   HW_CSS_FDS_AZURE_TENANT_ID: ${{ steps.HW_CSS_FDS_AZURE_TENANT_ID.outputs.HW_CSSM_FOODS_AZURE_TENANT_ID }}
-    #   HW_CSS_FDS__AZURE_SUBSCRIPTION_ID: ${{ steps.HW_CSS_FDS_AZURE_SUBSCRIPTION_ID.outputs.HW_CSSM_FOODS_AZURE_SUBSCRIPTION_ID }}
+    runs-on: [self-hosted, github-selfhosted-runner-autoscaler-rtl]
+
     steps:
       - name: Login to Azure
         uses: Azure/login@v1
         with:
-          client-id: ${{ secrets.HW_CSS_FDS_AZURE_CLIENT_ID }}
-          tenant-id: ${{ secrets.HW_CSS_FDS_AZURE_TENANT_ID }}
-          subscription-id: ${{ secrets.HW_CSS_FDS_AZURE_SUBSCRIPTION_ID }}
+          client-id: ${{ secrets.CSSM_HW_FOODS_AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.CSSM_HW_FOODS_AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.CSSM_HW_FOODS_AZURE_SUBSCRIPTION_ID }}
+
+      # - name: Download Secrets
+      #   id: secrets
+      #   run: |
+      #     keyfile=$(az keyvault secret show --vault-name $AZURE_KEYVAULT_NAME --name $AZURE_SECRET_NAME --query value -o tsv)
+      #     keyfile_flat="${keyfile//$'\n'/\\n}"
+      #     echo "Secrets read from vault"
+      #     echo "kfile=$keyfile_flat" >> $GITHUB_OUTPUT
+
+
+
+
+
+
 
       # - name: Download Secrets
       #   id: secrets
