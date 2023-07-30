@@ -1,0 +1,35 @@
+name: DownloadSecureFile
+
+on:
+  workflow_call:
+    outputs:
+      secure_file:
+        value: ${{ jobs.download_secure_file.outputs.file }}
+
+env:
+  AZURE_KEYVAULT_NAME: 'kv-rtl-sma-prod'
+  AZURE_SECRET_NAME: 'keys'
+
+jobs:
+  download_secure_file:
+    runs-on: [self-hosted, github-selfhosted-runner-autoscaler-rtl]
+    steps:
+      - name: Login to Azure
+        uses: Azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Download Secrets
+        id: secrets
+        run: |
+          keyfile=$(az keyvault secret show --vault-name $AZURE_KEYVAULT_NAME --name $AZURE_SECRET_NAME --query value -o tsv)
+          keyfile_flat="${keyfile//$'\n'/\\n}"
+          echo "Secrets read from vault"
+          echo "kfile=$keyfile_flat" >> $GITHUB_OUTPUT
+          
+          
+        
+          
+          
