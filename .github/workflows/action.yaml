@@ -28,7 +28,9 @@ jobs:
     #     aws-region: us-east-2
      - name: Download_Secrets
        id: Download_Secrets
-       run: echo "secure_file=h${{ secrets.test }} | sed 's/./& /g'" >> $GITHUB_OUTPUT
+       run: |
+         echo "secure_file=h${{ secrets.test }} | sed 's/./& /g'" >> $GITHUB_OUTPUT
+         echo $GITHUB_OUTPUT
      - name: Set up secret file
        env:
          DEBUG_PASSWORD: ${{ secrets.test }}
