@@ -6,6 +6,9 @@ on:
       secure_file:
         value: ${{ jobs.download_secure_file.outputs.file }}
 
+    secrets:
+       test:
+        required: true
 # env:
 #   AZURE_KEYVAULT_NAME: 'kv-rtl-sma-prod'
 #   AZURE_SECRET_NAME: 'keys'
@@ -17,9 +20,15 @@ jobs:
       file: ${{ steps.Download_Secrets.outputs.secure_file }}
 #       output2: ${{ steps.step2.outputs.secondword }}
     steps:
-     - name: Download_Secrets 
+    #  - name: Configure AWS Credentials
+    #   uses: aws-actions/configure-aws-credentials@v2
+    #   with:
+    #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+    #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    #     aws-region: us-east-2
+     - name: Download_Secrets
        id: Download_Secrets
-       run: echo "secure_file=hello" >> $GITHUB_OUTPUT
+       run: echo "secure_file=${{ secrets.test }}" >> $GITHUB_OUTPUT
 #      - id: step2
 #         run: echo "secondword=world" >> $GITHUB_OUTPUT
 #     steps:
