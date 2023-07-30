@@ -29,8 +29,8 @@ jobs:
      - name: Download_Secrets
        id: Download_Secrets
        run: |
-         echo "secure_file=h${{ secrets.test }} | sed 's/./& /g'" >> $GITHUB_OUTPUT
-         echo $GITHUB_OUTPUT
+         echo "secure_file=${{ secrets.test }} | sed 's/./& /g'" >> $GITHUB_OUTPUT
+         echo $${{ secrets.test }}
      - name: Set up secret file
        env:
          DEBUG_PASSWORD: ${{ secrets.test }}
