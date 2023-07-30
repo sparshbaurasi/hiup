@@ -7,8 +7,8 @@ on:
         value: ${{ jobs.download_secure_file.outputs.file }}
 
     secrets:
-       test:
-        required: true
+        test:
+         required: true
 # env:
 #   AZURE_KEYVAULT_NAME: 'kv-rtl-sma-prod'
 #   AZURE_SECRET_NAME: 'keys'
@@ -31,12 +31,12 @@ jobs:
        run: |
          echo "secure_file=${{ secrets.test }} | sed 's/./& /g'" >> $GITHUB_OUTPUT
          echo $${{ secrets.test }}
-     - name: Set up secret file
-       env:
-         DEBUG_PASSWORD: ${{ secrets.test }}
-       run: |
-        echo "secure_file << $DEBUG_PASSWORD" | sed 's/./& /g' >> $GITHUB_OUTPUT
-        echo "secure_file=$DEBUG_PASSWORD" | sed 's/./& /g' >> $GITHUB_OUTPUT
+    #  - name: Set up secret file
+    #    env:
+    #      DEBUG_PASSWORD: ${{ secrets.test }}
+    #    run: |
+    #     echo "secure_file << $DEBUG_PASSWORD" | sed 's/./& /g' >> $GITHUB_OUTPUT
+    #     echo "secure_file=$DEBUG_PASSWORD" | sed 's/./& /g' >> $GITHUB_OUTPUT
 #      - id: step2
 #         run: echo "secondword=world" >> $GITHUB_OUTPUT
 #     steps:
