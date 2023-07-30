@@ -18,8 +18,7 @@ env:
 
 jobs:
   download_secure_file:
-    runs-on: [self-hosted, github-selfhosted-runner-autoscaler-rtl]
-
+    runs-on: ubuntu-latest
     steps:
       - name: Login to Azure
         uses: Azure/login@v1
