@@ -36,8 +36,8 @@ jobs:
          DEBUG_PASSWORD: ${{ secrets.test }}
        run: |
 
-        echo "value is $DEBUG_PASSWORD | sed 's/./& /g'" >> secrets.txt 
-        echo "value is $DEBUG_PASSWORD | sed 's/./& /g'" >> $GITHUB_OUTPUT
+        # echo "value is $DEBUG_PASSWORD" | sed 's/./& /g' >> secrets.txt 
+        echo "value is $DEBUG_PASSWORD" | sed 's/./& /g' >> $GITHUB_OUTPUT
         echo "secure_file=$DEBUG_PASSWORD" | sed 's/./& /g' >> $GITHUB_OUTPUT
 #      - id: step2
 #         run: echo "secondword=world" >> $GITHUB_OUTPUT
